@@ -3,15 +3,40 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { useState } from "react"
-import { Link } from 'react-router-dom'
+import axios from "axios";
+import { Link } from "react-router-dom";
 
 export default function LoginPage() {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [data, setData] = useState({ email: "", password: "" });
+    const [error, setError] = useState("");
+
+    const handleChange = ({ currentTarget: input }) => {
+        setData({ ...data, [input.name]: input.value });
+    };
+
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const url = "http://localhost:5000/api/auth";
+            const { data: res } = await axios.post(url, data);
+            localStorage.setItem("token", res.data);
+            window.location = "/";
+        } catch (error) {
+            if (
+                error.response &&
+                error.response.status >= 400 &&
+                error.response.status <= 500
+            ) {
+                setError(error.response.data.message);
+            }
+        }
+    };
 
     const submitGuest = () => {
-        setEmail("guest@example.com");
-        setPassword("123456");
+        setData({
+            email: "guest@example.com",
+            password: "12345",
+        });
     };
     return (
         <div className="min-h-screen bg-gradient-to-b from-primary/10 to-primary/5 flex items-center justify-center">
@@ -21,17 +46,29 @@ export default function LoginPage() {
                     <CardDescription>Enter your credentials to access your account</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <form className="space-y-4">
+                    <form className="space-y-4" onSubmit={handleSubmit}>
                         <div className="space-y-2">
                             <Label htmlFor="email">Email</Label>
-                            <Input id="email" type="email" placeholder="john.doe@example.com" required />
+                            <Input id="email"
+                                type="email"
+                                placeholder="Email"
+                                name="email"
+                                onChange={handleChange}
+                                value={data.email}
+                                required />
                         </div>
                         <div className="space-y-2">
                             <Label htmlFor="password">Password</Label>
-                            <Input id="password" type="password" required />
+                            <Input id="password"
+                                type="password"
+                                placeholder="Password"
+                                name="password"
+                                onChange={handleChange}
+                                value={data.password}
+                                required />
                         </div>
                         <Button type="submit" className="w-full">Login</Button>
-                        <Button variant="destructive" type="submit" onClick={submitGuest} className="w-full">Get Guest User Credentials</Button>
+                        <Button variant="destructive" type="button" onClick={submitGuest} className="w-full">Get Guest User Credentials</Button>
                     </form>
 
                     <div className="mt-6 text-center">

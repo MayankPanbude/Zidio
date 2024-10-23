@@ -1,160 +1,103 @@
-import { Button } from "./ui/button"
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "./ui/card"
-import { ArrowRight, Code, Globe, Laptop, Smartphone, Server, Users, Zap } from "lucide-react"
+import React from 'react'
+import { motion } from "framer-motion"
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
+import { Globe, Smartphone, Server, Code, Database, Shield, Cpu, BarChart } from "lucide-react"
+import Navbar from '@/components/Navbar'
 import { Link } from 'react-router-dom'
-import Navbar from "./Navbar"
 
 export default function ServicesPage() {
+    const fadeIn = {
+        initial: { opacity: 0, y: 20 },
+        animate: { opacity: 1, y: 0 },
+        transition: { duration: 0.6 }
+    }
+
+    const services = [
+        { icon: Globe, title: "Web Development", description: "Custom web solutions tailored to your business needs, from responsive websites to complex web applications." },
+        { icon: Smartphone, title: "Mobile App Development", description: "Innovative mobile applications for iOS and Android platforms, designed to engage your audience and drive growth." },
+        { icon: Server, title: "Cloud Solutions", description: "Scalable and secure cloud infrastructure to optimize your operations and reduce costs." },
+        { icon: Code, title: "Custom Software Development", description: "Bespoke software solutions to address your unique business challenges and streamline processes." },
+        { icon: Database, title: "Database Management", description: "Efficient database design, implementation, and optimization to ensure your data is secure and accessible." },
+        { icon: Shield, title: "Cybersecurity Services", description: "Comprehensive security solutions to protect your digital assets and maintain customer trust." },
+        { icon: Cpu, title: "AI & Machine Learning", description: "Cutting-edge AI and machine learning solutions to automate processes and gain valuable insights." },
+        { icon: BarChart, title: "Data Analytics", description: "Advanced data analytics services to help you make data-driven decisions and uncover new opportunities." },
+    ]
+
     return (
         <div className="min-h-screen bg-gradient-to-b from-primary/10 to-primary/5">
             <Navbar />
 
-            <main className="container mx-auto px-4 py-12">
-                <section className="text-center mb-16">
-                    <h1 className="text-4xl font-bold mb-4">Our Services</h1>
-                    <p className="text-xl mb-8">Comprehensive IT solutions tailored to your business needs</p>
-                </section>
+            <main className="container mx-auto px-4 py-24">
+                <motion.section className="text-center mb-16" {...fadeIn}>
+                    <h1 className="text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-purple-600">Our Services</h1>
+                    <p className="text-xl mb-8 max-w-2xl mx-auto text-gray-700">
+                        Discover our comprehensive range of IT solutions designed to propel your business into the digital future.
+                    </p>
+                </motion.section>
 
-                <section className="mb-16">
+                <motion.section className="mb-16" {...fadeIn}>
                     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                        {[
-                            {
-                                icon: Globe,
-                                title: "Web Development",
-                                description: "Custom web applications, e-commerce solutions, and content management systems.",
-                                features: [
-                                    "Responsive design",
-                                    "User-friendly interfaces",
-                                    "Scalable architecture",
-                                    "SEO optimization"
-                                ]
-                            },
-                            {
-                                icon: Smartphone,
-                                title: "Mobile App Development",
-                                description: "Native and cross-platform mobile applications for iOS and Android.",
-                                features: [
-                                    "Intuitive UI/UX design",
-                                    "Performance optimization",
-                                    "Push notifications",
-                                    "Offline functionality"
-                                ]
-                            },
-                            {
-                                icon: Code,
-                                title: "Custom Software Development",
-                                description: "Tailor-made software solutions to address your unique business challenges.",
-                                features: [
-                                    "Requirements analysis",
-                                    "Agile development",
-                                    "Quality assurance",
-                                    "Ongoing support"
-                                ]
-                            },
-                            {
-                                icon: Server,
-                                title: "Cloud Solutions",
-                                description: "Cloud migration, infrastructure management, and optimization services.",
-                                features: [
-                                    "AWS and Azure expertise",
-                                    "Scalable architecture",
-                                    "Security best practices",
-                                    "Cost optimization"
-                                ]
-                            },
-                            {
-                                icon: Users,
-                                title: "IT Consulting",
-                                description: "Strategic technology advice to drive your business forward.",
-                                features: [
-                                    "Digital transformation",
-                                    "Technology roadmaps",
-                                    "Process optimization",
-                                    "Vendor selection"
-                                ]
-                            },
-                            {
-                                icon: Zap,
-                                title: "Maintenance and Support",
-                                description: "Ongoing maintenance and support for your IT systems and applications.",
-                                features: [
-                                    "24/7 technical support",
-                                    "Regular updates",
-                                    "Performance monitoring",
-                                    "Security patches"
-                                ]
-                            }
-                        ].map((service, index) => (
-                            <Card key={index} className="flex flex-col">
-                                <CardHeader>
-                                    <service.icon className="h-8 w-8 text-primary mb-2" />
-                                    <CardTitle>{service.title}</CardTitle>
-                                    <CardDescription>{service.description}</CardDescription>
-                                </CardHeader>
-                                <CardContent className="flex-grow">
-                                    <ul className="list-disc list-inside space-y-2">
-                                        {service.features.map((feature, featureIndex) => (
-                                            <li key={featureIndex}>{feature}</li>
-                                        ))}
-                                    </ul>
-                                </CardContent>
-                            </Card>
+                        {services.map((service, index) => (
+                            <motion.div
+                                key={index}
+                                initial={{ opacity: 0, y: 20 }}
+                                animate={{ opacity: 1, y: 0 }}
+                                transition={{ duration: 0.5, delay: index * 0.1 }}
+                            >
+                                <Card className="h-full bg-white hover:shadow-lg transition-shadow duration-300">
+                                    <CardHeader>
+                                        <div className="w-12 h-12 rounded-full bg-gradient-to-br from-blue-500 to-purple-600 flex items-center  justify-center mb-4">
+                                            <service.icon className="h-6 w-6 text-white" />
+                                        </div>
+                                        <CardTitle className="text-xl mb-2">{service.title}</CardTitle>
+                                    </CardHeader>
+                                    <CardContent>
+                                        <p className="text-gray-700">{service.description}</p>
+                                    </CardContent>
+                                </Card>
+                            </motion.div>
                         ))}
                     </div>
-                </section>
+                </motion.section>
 
-                <section className="mb-16">
-                    <h2 className="text-3xl font-semibold mb-8 text-center">Our Development Process</h2>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                        {[
-                            { title: "1. Requirements Gathering", description: "We work closely with you to understand your needs and objectives." },
-                            { title: "2. Planning & Design", description: "Our team creates a detailed project plan and design mockups." },
-                            { title: "3. Development & Testing", description: "We build your solution using agile methodologies and rigorous testing." },
-                            { title: "4. Deployment & Support", description: "We launch your project and provide ongoing maintenance and support." },
-                        ].map((step, index) => (
-                            <Card key={index}>
-                                <CardHeader>
-                                    <CardTitle>{step.title}</CardTitle>
-                                </CardHeader>
-                                <CardContent>
-                                    <p>{step.description}</p>
-                                </CardContent>
-                            </Card>
-                        ))}
+                <motion.section className="mb-16" {...fadeIn}>
+                    <h2 className="text-3xl font-semibold mb-8 text-center">Our Approach</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <div className="bg-white p-8 rounded-lg shadow-md">
+                            <h3 className="text-2xl font-semibold mb-4">Consultation</h3>
+                            <p className="text-gray-700">We begin with a thorough consultation to understand your business needs, challenges, and goals. This allows us to tailor our services to your specific requirements.</p>
+                        </div>
+                        <div className="bg-white p-8 rounded-lg shadow-md">
+                            <h3 className="text-2xl font-semibold mb-4">Custom Solution Design</h3>
+                            <p className="text-gray-700">Our expert team designs a custom solution that addresses your unique challenges and aligns with your business objectives.</p>
+                        </div>
+                        <div className="bg-white p-8 rounded-lg shadow-md">
+                            <h3 className="text-2xl font-semibold mb-4">Agile Development</h3>
+                            <p className="text-gray-700">We employ agile methodologies to ensure flexibility, transparency, and continuous improvement throughout the development process.</p>
+                        </div>
+                        <div className="bg-white p-8 rounded-lg shadow-md">
+                            <h3 className="text-2xl font-semibold mb-4">Quality Assurance</h3>
+                            <p className="text-gray-700">Rigorous testing and quality assurance processes ensure that our solutions meet the highest standards of performance and reliability.</p>
+                        </div>
                     </div>
-                </section>
+                </motion.section>
 
-                <section className="mb-16">
-                    <h2 className="text-3xl font-semibold mb-8 text-center">Technologies We Use</h2>
-                    <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-                        {[
-                            "React", "Node.js", "Python", "Java",
-                            "Swift", "Kotlin", "Angular", "Vue.js",
-                            "PHP", ".NET", "AWS", "Azure",
-                            "Docker", "Kubernetes", "MongoDB", "MySQL"
-                        ].map((tech, index) => (
-                            <Card key={index} className="flex items-center justify-center p-4">
-                                <span className="font-semibold">{tech}</span>
-                            </Card>
-                        ))}
+                <motion.section {...fadeIn}>
+                    <h2 className="text-3xl font-semibold mb-8 text-center">Ready to Transform Your Business?</h2>
+                    <p className="text-center text-gray-700 max-w-2xl mx-auto mb-8">
+                        Let's discuss how our services can help you achieve your business goals and stay ahead in the digital landscape.
+                    </p>
+                    <div className="text-center">
+                        <Link to="/contact" className="inline-block bg-gradient-to-r from-blue-600 to-purple-600 text-white font-semibold py-3 px-6 rounded-lg hover:from-blue-700 hover:to-purple-700 transition-all duration-300">
+                            Get in Touch
+                        </Link>
                     </div>
-                </section>
-
-                <section className="text-center">
-                    <h2 className="text-3xl font-semibold mb-4">Ready to Get Started?</h2>
-                    <p className="mb-8">Let's discuss how our services can help you achieve your business goals.</p>
-                    <Link to="/contact">
-                        <Button size="lg">
-                            Contact Us
-                            <ArrowRight className="ml-2 h-4 w-4" />
-                        </Button>
-                    </Link>
-                </section>
+                </motion.section>
             </main>
 
-            <footer className="bg-primary text-primary-foreground mt-16 py-8">
+            <footer className="bg-gradient-to-r from-blue-600 to-purple-700 text-white py-8">
                 <div className="container mx-auto px-4 text-center">
-                    <p>&copy; 2023 Zidio. All rights reserved.</p>
+                    <p>&copy; 2024 Zidio. All rights reserved.</p>
                 </div>
             </footer>
         </div>
